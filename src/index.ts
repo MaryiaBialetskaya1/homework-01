@@ -22,15 +22,17 @@ let videos = [
 app.get('/', (req: Request, res: Response) =>{
     res.send("Homework - Maryia Bialetskaya!!!")
 })
+app.delete( '/testing/all-data', (req: Request, res:Response) =>{
+    videos.length = 0
+    res.send(204)
+})
+
 
 app.get('/videos', (req: Request, res: Response) =>{
     res.send(videos)
 })
 
-app.delete( '/testing/all-data', (req: Request, res:Response) =>{
-    videos.length = 0
-    res.send(204)
-})
+
 
 //start app
 app.listen(port, () => {
