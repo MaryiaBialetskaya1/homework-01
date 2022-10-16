@@ -7,12 +7,12 @@ const port = process.env.PORT || 3000
 let videos = [
     {
         id: +(new Date()),
-        title: "About JS - 01",
-        author: "IT-INCUBATOR.EU",
-        canBeDownloaded: true,
+        title: "string",
+        author: "string",
+        canBeDownloaded: false,
         minAgeRestriction: null,
-        createdAt: "2022-10-16T15:51:40.667Z",
-        publicationDate: "2022-10-16T15:51:40.667Z",
+        createdAt: (new Date().toISOString()),
+        publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
         availableResolutions: [
             "P144"
         ]
@@ -27,6 +27,9 @@ app.delete( '/testing/all-data', (req: Request, res:Response) =>{
     res.send(204)
 })
 app.get('/videos', (req: Request, res: Response) =>{
+    let title = req.body.title
+    let author = req.body.author
+    let availableResolutions = req.body.availableResolutions
     res.send(videos)
 })
 app.post('/videos', (req:Request, res: Response) =>{
@@ -39,7 +42,6 @@ app.post('/videos', (req:Request, res: Response) =>{
                 "field": "title"
                 }
             ],
-            resultCode: 1
         })
     }
     let author = req.body.author
