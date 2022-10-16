@@ -6,7 +6,7 @@ const port = process.env.PORT || 3000
 
 let videos = [
     {
-        id: new Date().toISOString(),
+        id: +(new Date()),
         title: "About JS - 01",
         author: "IT-INCUBATOR.EU",
         canBeDownloaded: true,
@@ -42,20 +42,20 @@ app.post('/videos', (req:Request, res: Response) =>{
             resultCode: 1
         })
     }
-    let author =req.body.author
+    let author = req.body.author
     if(!author || typeof author !== "string" || !title.trim() || author.length > 20){
         res.status(400).send({
             errorsMessages: [
                 {
                     "message": "Incorrect title",
-                    "field": "title, author"
+                    "field": "title"
                 }
             ],
             resultCode: 1
         })
     }
     const newVideo = {
-        id: new Date().toISOString(),
+        id: +(new Date()),
         title: req.body.title,
         author: req.body.author,
         canBeDownloaded: true,
@@ -70,7 +70,16 @@ app.post('/videos', (req:Request, res: Response) =>{
     res.status(201).send(newVideo)
 })
 
-
+app.delete('/videos/:id',(req: Request, res: Response) => {
+    const id = +req.params.id;
+    const newVideos = videos.filter(v => v.id !== id)
+    if(newVideos.length < videos.length) {
+        videos = newVideos
+        res.send(204)
+    } else{
+        res.send(404)
+    }
+})
 
 //start app
 app.listen(port, () => {
