@@ -20,7 +20,7 @@ let videos = [
 ]
 
 app.get('/', (req: Request, res: Response) =>{
-    res.send("Homework - Maryia Bialetskaya!!!")
+    res.send("Homework - Maria Bialetskaya!!!")
 })
 app.delete( '/testing/all-data', (req: Request, res:Response) =>{
     videos.length = 0
@@ -55,7 +55,7 @@ app.post('/videos', (req:Request, res: Response) =>{
         })
     }
     let availableResolutions = req.body.availableResolutions
-    if(availableResolutions.length < 1 || availableResolutions == undefined){
+    if(availableResolutions.length < 1){
         res.status(400).send({
             errorsMessages: [
                 {
