@@ -19,7 +19,7 @@ const port = process.env.PORT || 3000
 //     },
 // ]
 let videos: any[] = []
-let AvailableResolutions:any[] = []
+//let AvailableResolutions:any[] = []
 
 app.get('/', (req: Request, res: Response) =>{
     res.send("IT-Incubator")
@@ -42,6 +42,9 @@ app.post('/videos', (req:Request, res: Response) =>{
     let title = req.body.title
     let author = req.body.author
     let availableResolutions = req.body.availableResolutions
+
+    let AvailableResolutions = ["P144", "P240", "P360", "P480", "P720", "P1080", "P1440", "P2160"]
+
 
 
     if(!title || typeof title !== "string" || !title.trim() || title.length > 40){
@@ -78,20 +81,20 @@ app.post('/videos', (req:Request, res: Response) =>{
         return
     }
 
-    let createdAt = new Date().toISOString()
-    let date = new Date()
-    date.setDate(date.getDate() + 1)
-    let publicationDate = date.toISOString()
+    // let createdAt = new Date().toISOString()
+    // let date = new Date()
+    // date.setDate(date.getDate() + 1)
+    // let publicationDate = date.toISOString()
 
     const newVideo = {
         id: +(new Date().getDate()),
-        title,
-        author,
+        title: title,
+        author: author,
         canBeDownloaded: false,
         minAgeRestriction: null,
-        createdAt,
-        publicationDate,
-        availableResolutions
+        createdAt: (new Date(Date.now()).toISOString()),
+        publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
+        availableResolutions: req.body.availableResolutions
     }
     videos.push(newVideo)
     res.status(201).send(newVideo)
