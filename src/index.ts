@@ -26,11 +26,7 @@ app.delete( '/testing/all-data', (req: Request, res:Response) =>{
     videos.length = 0
     res.send(204)
 })
-app.get('/videos', (req: Request, res: Response) =>{
-    let title = req.body.title
-    title.setAttribute("required", '')
-    let author = req.body.author
-    author.setAttribute("required", '')
+app.get('/videos', (req: Request, res: Response) => {
     res.send(videos)
 })
 app.post('/videos', (req:Request, res: Response) =>{
@@ -58,6 +54,8 @@ app.post('/videos', (req:Request, res: Response) =>{
             ],
         })
     }
+    let availableResolutions = req.body.availableResolutions
+
     const newVideo = {
         id: +(new Date()),
         title: req.body.title,
@@ -73,7 +71,15 @@ app.post('/videos', (req:Request, res: Response) =>{
     videos.push(newVideo)
     res.status(201).send(newVideo)
 })
-
+app.get('/videos/:id', (req: Request, res: Response) => {
+    const id = +req.params.id;
+    const video = videos.find(v => v.id === id)
+    if(video){
+        res.send(video)
+    } else {
+        res.send(404)
+    }
+})
 app.delete('/videos/:id',(req: Request, res: Response) => {
     const id = +req.params.id;
     const newVideos = videos.filter(v => v.id !== id)
