@@ -33,29 +33,7 @@ app.get('/videos/:id', (req: Request, res: Response) => {
 })
 
 app.put('/videos/:id',(req: Request, res: Response) => {
-    let error: {errorsMessages: any[]}= {
-        errorsMessages: []
-    }
-    let title = req.body.title
-    let author = req.body.author
-    let canBeDownloaded = req.body.canBeDownloaded
-    let minAgeRestriction = req.body.minAgeRestriction
-    let publicationDate = req.body.publicationDate
-    let availableResolutions = req.body.availableResolutions
 
-    if(!title || typeof title !== "string" || !title.trim() || title.length > 40){
-        error.errorsMessages.push({
-            "message": "Incorrect title",
-            "field": "title"
-        })
-    }
-
-    if(!author || typeof author !== "string" || !title.trim() || author.length > 20){
-        error.errorsMessages.push({
-            "message": "Incorrect title",
-            "field": "author"
-        })
-    }
 })
 
 app.delete('/videos/:id',(req: Request, res: Response) => {
