@@ -93,16 +93,6 @@ app.put('/videos/:id',(req: Request, res: Response) => {
 
 })
 
-app.delete('/videos/:id',(req: Request, res: Response) => {
-    const id = +req.params.id;
-    const newVideos = videos.filter(v => v.id !== id)
-    if(newVideos.length < videos.length) {
-        videos = newVideos
-        res.send(204)
-    } else{
-        res.send(404)
-    }
-})
 
 //start app
 app.listen(port, () => {
