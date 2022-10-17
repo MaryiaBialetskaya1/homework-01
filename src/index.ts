@@ -31,7 +31,6 @@ app.get('/videos', (req: Request, res: Response) =>{
     title.setAttribute("required", '')
     let author = req.body.author
     author.setAttribute("required", '')
-    let availableResolutions = req.body.availableResolutions
     res.send(videos)
 })
 app.post('/videos', (req:Request, res: Response) =>{
