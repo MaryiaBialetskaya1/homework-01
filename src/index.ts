@@ -3,23 +3,7 @@ import express, {Request, Response}  from 'express'
 const app = express()
 const port = process.env.PORT || 3000
 
-
-// let videos = [
-//     {
-//         id: +(new Date()),
-//         title: "string",
-//         author: "string",
-//         canBeDownloaded: false,
-//         minAgeRestriction: null,
-//         createdAt: (new Date().toISOString()),
-//         publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
-//         availableResolutions: [
-//             "P144"
-//         ]
-//     },
-// ]
 let videos: any[] = []
-//let AvailableResolutions:any[] = []
 
 app.get('/', (req: Request, res: Response) =>{
     res.send("IT-Incubator")
@@ -81,24 +65,20 @@ app.post('/videos', (req:Request, res: Response) =>{
         return
     }
 
-    // let createdAt = new Date().toISOString()
-    // let date = new Date()
-    // date.setDate(date.getDate() + 1)
-    // let publicationDate = date.toISOString()
-
     const newVideo = {
         id: +(new Date().getDate()),
         title: title,
         author: author,
         canBeDownloaded: false,
         minAgeRestriction: null,
-        createdAt: (new Date(Date.now()).toISOString()),
+        createdAt: new Date().toISOString(),
         publicationDate: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
         availableResolutions: req.body.availableResolutions
     }
     videos.push(newVideo)
     res.status(201).send(newVideo)
 })
+
 app.get('/videos/:id', (req: Request, res: Response) => {
     const id = +req.params.id;
     const video = videos.find(v => v.id === id)
@@ -108,6 +88,7 @@ app.get('/videos/:id', (req: Request, res: Response) => {
         res.send(404)
     }
 })
+
 app.put('/videos/:id',(req: Request, res: Response) => {
     let error: {errorsMessages: any[]}= {
         errorsMessages: []
