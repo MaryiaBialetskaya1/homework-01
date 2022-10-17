@@ -55,6 +55,16 @@ app.post('/videos', (req:Request, res: Response) =>{
         })
     }
     let availableResolutions = req.body.availableResolutions
+    if(availableResolutions.length < 1 || availableResolutions == undefined){
+        res.status(400).send({
+            errorsMessages: [
+                {
+                    "message": "Incorrect title",
+                    "field": "title"
+                }
+            ],
+        })
+    }
 
     const newVideo = {
         id: +(new Date()),
