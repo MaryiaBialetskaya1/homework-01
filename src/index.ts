@@ -28,12 +28,15 @@ app.delete( '/testing/all-data', (req: Request, res:Response) =>{
 })
 app.get('/videos', (req: Request, res: Response) =>{
     let title = req.body.title
+    title.setAttribute("required", '')
     let author = req.body.author
+    author.setAttribute("required", '')
     let availableResolutions = req.body.availableResolutions
     res.send(videos)
 })
 app.post('/videos', (req:Request, res: Response) =>{
     let title = req.body.title
+    title.setAttribute("required", '')
     if(!title || typeof title !== "string" || !title.trim() || title.length > 40){
         res.status(400).send({
             errorsMessages: [
@@ -45,6 +48,7 @@ app.post('/videos', (req:Request, res: Response) =>{
         })
     }
     let author = req.body.author
+    title.setAttribute("required", '')
     if(!author || typeof author !== "string" || !title.trim() || author.length > 20){
         res.status(400).send({
             errorsMessages: [
@@ -53,7 +57,6 @@ app.post('/videos', (req:Request, res: Response) =>{
                     "field": "title"
                 }
             ],
-            resultCode: 1
         })
     }
     const newVideo = {
