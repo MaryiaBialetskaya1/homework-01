@@ -40,7 +40,7 @@ app.post('/videos', (req: Request, res: Response) =>{
     }
     if(!author || typeof author !== "string" || !title.trim() || author.length > 20){
         error.errorMessages.push({
-            "message": "Incorrect title",
+            "message": "Incorrect author",
             "field": "author"
         })
     }
@@ -62,10 +62,10 @@ app.post('/videos', (req: Request, res: Response) =>{
 
     if(error.errorMessages.length){
         res.status(400).send(error)
-        return
+        return;
     }
     const newVideo = {
-        id: +(new Date().getDate()),
+        id: +(new Date().getTime()),
         title: req.body.title,
         author: req.body.author,
         canBeDownloaded: false,
