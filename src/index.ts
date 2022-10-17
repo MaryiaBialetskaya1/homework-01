@@ -20,7 +20,7 @@ let videos = [
 ]
 
 app.get('/', (req: Request, res: Response) =>{
-    res.send("Homework - Maria Bialetskaya!!!")
+    res.send("Homework - Maria Bialetskay")
 })
 app.delete( '/testing/all-data', (req: Request, res:Response) =>{
     videos.length = 0
@@ -31,7 +31,11 @@ app.get('/videos', (req: Request, res: Response) => {
 })
 app.post('/videos', (req:Request, res: Response) =>{
     let title = req.body.title
+    let author = req.body.author
+
     title.setAttribute("required", '')
+    title.setAttribute("required", '')
+
     if(!title || typeof title !== "string" || !title.trim() || title.length > 40){
         res.status(400).send({
             errorsMessages: [
@@ -42,8 +46,7 @@ app.post('/videos', (req:Request, res: Response) =>{
             ],
         })
     }
-    let author = req.body.author
-    title.setAttribute("required", '')
+
     if(!author || typeof author !== "string" || !title.trim() || author.length > 20){
         res.status(400).send({
             errorsMessages: [
@@ -74,9 +77,7 @@ app.post('/videos', (req:Request, res: Response) =>{
         minAgeRestriction: null,
         createdAt: "2022-10-16T15:51:40.667Z",
         publicationDate: "2022-10-16T15:51:40.667Z",
-        availableResolutions: [
-            "P144"
-        ]
+        availableResolutions: req.body.availableResolutions
     }
     videos.push(newVideo)
     res.status(201).send(newVideo)
