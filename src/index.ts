@@ -11,7 +11,7 @@ let videos: any[] = []
 let AvailableResolutions = ["P144", "P240", "P360", "P480", "P720", "P1080", "P1440", "P2160"]
 
 app.get('/', (req: Request, res: Response) =>{
-    res.send("IT-Incubator")
+    res.send("IT-Incubator!!!")
 })
 
 app.delete( '/testing/all-data', (req: Request, res:Response) =>{
