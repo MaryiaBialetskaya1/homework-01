@@ -90,6 +90,64 @@ app.get('/videos/:id', (req: Request, res: Response) => {
 })
 
 app.put('/videos/:id',(req: Request, res: Response) => {
+    let error: {errorMessages: any[]} = {
+        errorMessages: []
+    }
+    let title = req.body.title
+    let author = req.body.author
+    let canBeDownloaded = req.body.canBeDownloaded
+    let publicationDate = req.body.publicationDate
+    let availableResolutions = req.body.availableResolutions
+
+    if(!title || typeof title !== "string" || !title.trim() || title.length > 40){
+        error.errorMessages.push({
+            "message": "Incorrect title",
+            "field": "title"
+        })
+    }
+    if(!author || typeof author !== "string" || !title.trim() || author.length > 20){
+        error.errorMessages.push({
+            "message": "Incorrect author",
+            "field": "author"
+        })
+    }
+    if(availableResolutions){
+        if(!Array.isArray(availableResolutions)){
+            error.errorMessages.push({
+                "message": "Incorrect available resolution",
+                "field": "availableResolutions"
+            })
+        } else{
+            availableResolutions.forEach(resolution => {
+                !AvailableResolutions.includes(resolution) && error.errorMessages.push({
+                    "message": "Incorrect available resolution",
+                    "field": "availableResolutions"
+                })
+            })
+        }
+    }
+
+    //TODO add validation
+
+    if(error.errorMessages.length){
+        res.status(400).send(error)
+        return;
+    }
+    const id = +req.params.id
+    let video = videos.find(v => v.id === id)
+    if(video){
+        video.title = title
+        video.author = author
+        video.canBeDownloaded = req.body.canBeDownloaded
+        video.minAgeRestriction = req.body.minAgeRestriction
+        video.publicationDate = req.body.publicationDate
+        video.availableResolutions = req.body.availableResolutions
+
+        res.status(204).send(video)
+    } else{
+        res.send(404)
+    }
+
 
 })
 
