@@ -126,9 +126,12 @@ app.put('/videos/:id',(req: Request, res: Response) => {
             })
         }
     }
-
-    //TODO add validation
-
+    if(typeof canBeDownloaded !== "boolean"){
+        error.errorMessages.push({
+            "message": "Incorrect",
+            "field": "canBeDownloaded"
+        })
+    }
     if(error.errorMessages.length){
         res.status(400).send(error)
         return;
@@ -147,8 +150,6 @@ app.put('/videos/:id',(req: Request, res: Response) => {
     } else{
         res.send(404)
     }
-
-
 })
 
 app.delete('/videos/:id',(req: Request, res: Response) => {
