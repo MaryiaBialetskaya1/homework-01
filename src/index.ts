@@ -24,35 +24,33 @@ app.get('/videos', (req: Request, res: Response) => {
 })
 
 app.post('/videos', (req: Request, res: Response) =>{
-    let error: {errorMessages: any[]} = {
-        errorMessages: []
-    }
+    const error = []
 
     let title = req.body.title
     let author = req.body.author
     let availableResolutions = req.body.availableResolutions
 
     if(!title || typeof title !== "string" || !title.trim() || title.length > 40){
-        error.errorMessages.push({
+        error.push({
             "message": "Incorrect title",
             "field": "title"
         })
     }
     if(!author || typeof author !== "string" || !title.trim() || author.length > 20){
-        error.errorMessages.push({
+        error.push({
             "message": "Incorrect author",
             "field": "author"
         })
     }
     if(availableResolutions){
         if(!Array.isArray(availableResolutions)){
-            error.errorMessages.push({
+            error.push({
                 "message": "Incorrect available resolution",
                 "field": "availableResolutions"
             })
         } else{
             availableResolutions.forEach(resolution => {
-                !AvailableResolutions.includes(resolution) && error.errorMessages.push({
+                !AvailableResolutions.includes(resolution) && error.push({
                     "message": "Incorrect available resolution",
                     "field": "availableResolutions"
                 })
@@ -60,8 +58,8 @@ app.post('/videos', (req: Request, res: Response) =>{
         }
     }
 
-    if(error.errorMessages.length){
-        res.status(400).send(error)
+    if(error.length){
+        res.status(400).send({errorMessages: error})
         return;
     }
     const newVideo = {
@@ -90,9 +88,8 @@ app.get('/videos/:id', (req: Request, res: Response) => {
 })
 
 app.put('/videos/:id',(req: Request, res: Response) => {
-    let error: {errorMessages: any[]} = {
-        errorMessages: []
-    }
+    const error = []
+
     let title = req.body.title
     let author = req.body.author
     let canBeDownloaded = req.body.canBeDownloaded
@@ -100,26 +97,26 @@ app.put('/videos/:id',(req: Request, res: Response) => {
     let availableResolutions = req.body.availableResolutions
 
     if(!title || typeof title !== "string" || !title.trim() || title.length > 40){
-        error.errorMessages.push({
+        error.push({
             "message": "Incorrect title",
             "field": "title"
         })
     }
     if(!author || typeof author !== "string" || !title.trim() || author.length > 20){
-        error.errorMessages.push({
+        error.push({
             "message": "Incorrect author",
             "field": "author"
         })
     }
     if(availableResolutions){
         if(!Array.isArray(availableResolutions)){
-            error.errorMessages.push({
+            error.push({
                 "message": "Incorrect available resolution",
                 "field": "availableResolutions"
             })
         } else{
             availableResolutions.forEach(resolution => {
-                !AvailableResolutions.includes(resolution) && error.errorMessages.push({
+                !AvailableResolutions.includes(resolution) && error.push({
                     "message": "Incorrect available resolution",
                     "field": "availableResolutions"
                 })
@@ -127,13 +124,13 @@ app.put('/videos/:id',(req: Request, res: Response) => {
         }
     }
     if(typeof canBeDownloaded !== "boolean"){
-        error.errorMessages.push({
+        error.push({
             "message": "Incorrect",
             "field": "canBeDownloaded"
         })
     }
-    if(error.errorMessages.length){
-        res.status(400).send(error)
+    if(error.length){
+        res.status(400).send({errorMessages: error})
         return;
     }
     const id = +req.params.id
