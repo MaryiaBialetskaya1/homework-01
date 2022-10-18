@@ -129,6 +129,18 @@ app.put('/videos/:id',(req: Request, res: Response) => {
             "field": "canBeDownloaded"
         })
     }
+    if(typeof publicationDate !== "string"){
+        error.push({
+            "message": "Incorrect",
+            "field": "publicationDate"
+        })
+    }
+    if(typeof req.body.minAgeRestriction !== "number" || req.body.minAgeRestriction < 1 || req.body.minAgeRestriction > 18){
+        error.push({
+            "message": "Incorrect",
+            "field": "minAgeRestriction"
+        })
+    }
     if(error.length){
         res.status(400).send({errorMessages: error})
         return;
