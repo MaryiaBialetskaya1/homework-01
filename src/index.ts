@@ -59,7 +59,7 @@ app.post('/videos', (req: Request, res: Response) =>{
     }
 
     if(error.length){
-        res.status(400).send({errorMessages: error})
+        res.status(400).send({errorsMessages: error})
         return;
     }
     const newVideo = {
@@ -142,7 +142,7 @@ app.put('/videos/:id',(req: Request, res: Response) => {
         })
     }
     if(error.length){
-        res.status(400).send({errorMessages: error})
+        res.status(400).send({errorsMessages: error})
         return;
     }
     const id = +req.params.id
